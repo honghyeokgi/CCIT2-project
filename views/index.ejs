@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang=''>
+<head>
+   <meta charset='utf-8'>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="sty.css">
+   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+   <script src="script.js"></script>
+   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+   <link href='https://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
+   <title>CSS MenuMaker</title>
+</head>
+<body>
+
+
+
+
+<div id='cssmenu'>
+<ul>
+   <li><img src = "it.png" width="70px" height="58px"><li>
+   <li><a href='#'>Home</a></li>
+   <li class='active has-sub'><a href='#'>Products</a>
+      <ul>
+         <li class='has-sub'><a href='#'>Product 1</a>
+            <ul>
+               <li><a href='#'>Sub Product</a></li>
+               <li><a href='#'>Sub Product</a></li>
+            </ul>
+         </li>
+         <li class='has-sub'><a href='#'>Product 2</a>
+            <ul>
+               <li><a href='#'>Sub Product</a></li>
+               <li><a href='#'>Sub Product</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li><a href='#'>Log in</a></li>
+   <li><a href='#'>Sign Up</a></li>
+</ul>
+</div>
+<br>
+<br>
+<br>
+<br>
+
+<div id="wrapper">
+      <div id="slider-wrap">
+          <ul id="slider">
+             <li>
+                <div>
+                    <h3>Slide #1</h3>
+                    <span>Sub-title #1</span>
+                </div>
+<img src="home.jpg" width="1265" height = "333" >
+             </li>
+
+             <li>
+                <div>
+                    <h3>Slide #2</h3>
+                    <span>Sub-title #2</span>
+                </div>
+<img src="mir.png" width= "1265" height = "333">
+             </li>
+
+             <li>
+                <div>
+                    <h3>Slide #3</h3>
+                    <span>Sub-title #3</span>
+                </div>
+<img src="333.png" width = "1265" height = "333">
+             </li>
+
+             <li>
+                <div>
+                    <h3>Slide #4</h3>
+                    <span>Sub-title #4</span>
+                </div>
+<img src="https://fakeimg.pl/350x200/0A6E0A/000?text=44444">
+             </li>
+
+             <li>
+                <div>
+                    <h3>Slide #5</h3>
+                    <span>Sub-title #5</span>
+                </div>
+<img src="https://fakeimg.pl/350x200/0064CD/000?text=55555">
+             </li>
+
+
+          </ul>
+
+           <!--controls-->
+          <div class="btns" id="next"><i class="fa fa-arrow-right"></i></div>
+          <div class="btns" id="previous"><i class="fa fa-arrow-left"></i></div>
+          <div id="counter"></div>
+
+          <div id="pagination-wrap">
+            <ul>
+            </ul>
+          </div>
+          <!--controls-->
+
+      </div>
+
+   </div>
+
+
+
+<script>
+//current position
+var pos = 0;
+//number of slides
+var totalSlides = $('#slider-wrap ul li').length;
+//get the slide width
+var sliderWidth = $('#slider-wrap').width();
+
+
+$(document).ready(function(){
+
+
+    /*****************
+     BUILD THE SLIDER
+    *****************/
+    //set width to be 'x' times the number of slides
+    $('#slider-wrap ul#slider').width(sliderWidth*totalSlides);
+
+    //next slide
+    $('#next').click(function(){
+        slideRight();
+    });
+
+    //previous slide
+    $('#previous').click(function(){
+        slideLeft();
+    });
+
+
+
+    /*************************
+     //*> OPTIONAL SETTINGS
+    ************************/
+    //automatic slider
+    var autoSlider = setInterval(slideRight, 3000);
+
+    //for each slide
+    $.each($('#slider-wrap ul li'), function() {
+
+       //create a pagination
+       var li = document.createElement('li');
+       $('#pagination-wrap ul').append(li);
+    });
+
+    //counter
+    countSlides();
+
+    //pagination
+    pagination();
+
+    //hide/show controls/btns when hover
+    //pause automatic slide when hover
+    $('#slider-wrap').hover(
+      function(){ $(this).addClass('active'); clearInterval(autoSlider); },
+      function(){ $(this).removeClass('active'); autoSlider = setInterval(slideRight, 3000); }
+    );
+
+
+
+});//DOCUMENT READY
+
+
+
+/***********
+ SLIDE LEFT
+************/
+function slideLeft(){
+    pos--;
+    if(pos==-1){ pos = totalSlides-1; }
+    $('#slider-wrap ul#slider').css('left', -(sliderWidth*pos));
+
+    //*> optional
+    countSlides();
+    pagination();
+}
+
+
+/************
+ SLIDE RIGHT
+*************/
+function slideRight(){
+    pos++;
+    if(pos==totalSlides){ pos = 0; }
+    $('#slider-wrap ul#slider').css('left', -(sliderWidth*pos));
+
+    //*> optional
+    countSlides();
+    pagination();
+}
+
+
+
+
+/************************
+ //*> OPTIONAL SETTINGS
+************************/
+function countSlides(){
+    $('#counter').html(pos+1 + ' / ' + totalSlides);
+}
+
+function pagination(){
+    $('#pagination-wrap ul li').removeClass('active');
+    $('#pagination-wrap ul li:eq('+pos+')').addClass('active');
+}
+</script>
+</body>
+<html>
